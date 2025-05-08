@@ -1,5 +1,5 @@
 import java.util.List;
-
+import java.io.*;
 
         
 
@@ -15,9 +15,57 @@ public class Main {
 		return zufallszahl;
 	}
 	
+
+	    static class MultiOutputStream extends OutputStream {
+	        private OutputStream[] ausgaeben;
+
+	        public MultiOutputStream(OutputStream... ausgaeben) {
+	            this.ausgaeben = ausgaeben;
+	        }
+
+	        @Override
+	        public void write(int b) throws IOException {
+	            for (OutputStream out : ausgaeben) {
+	                out.write(b);
+	            }
+	        }
+
+	        @Override
+	        public void flush() throws IOException {
+	            for (OutputStream out : ausgaeben) {
+	                out.flush();
+	            }
+	        }
+
+	        @Override
+	        public void close() throws IOException {
+	            for (OutputStream out : ausgaeben) {
+	                out.close();
+	            }
+	        }
+	    }
+	
 	
     public static void main(String[] args) {
-    
+    	
+    	 try {
+	            // Ursprüngliche Konsole merken
+	            PrintStream konsole = System.out;
+
+	            // Datei vorbereiten
+	            PrintStream datei = new PrintStream(new FileOutputStream("ausgabe.txt"));
+
+	            // Kombinierter Stream: schreibt an beide
+	            PrintStream kombiniert = new PrintStream(new MultiOutputStream(konsole, datei));
+
+	            // System.out umleiten
+	            System.setOut(kombiniert);
+	           
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+    	
         Auktionshaus auktionshaus = Auktionshaus.getInstance();
         Userverwaltung userverwaltung = auktionshaus.getUserverwaltung();
 
@@ -66,9 +114,11 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        
         // Bericht erstellen
         auktionshaus.erstelleBericht();
+        
+        
     }
 }
 

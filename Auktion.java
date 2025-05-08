@@ -33,13 +33,12 @@ public class Auktion implements Runnable {
 
     public synchronized boolean biete(User bieter, double gebotswahrscheinlichkeit) {
         if (istAktiv && Math.random() < gebotswahrscheinlichkeit) {
-        	if(bieter.getBudget()>=aktuellerPreis) {
-        	bieter.reduceBudget(aktuellerPreis);
+        	
             istAktiv = false;
             artikelVerkauft = true;
             provision = aktuellerPreis * 0.18; // 1% Provision
             return true;
-        	}
+        	
         }
         return false;
     }
