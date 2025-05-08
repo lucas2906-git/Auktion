@@ -1,18 +1,30 @@
+import java.util.List;
 
 /**
- * Repräsentiert das Auktionshaus und steuert die Simulation.
+ * Repräsentiert das Auktionshaus, das als Singleton implementiert ist.
+ * Es verwaltet Benutzer und Auktionen und steuert den Ablauf der Auktion mittels Simulation.
  */
-import java.util.List;
 public class Auktionshaus {
+
     private static Auktionshaus instance;
     private Userverwaltung userverwaltung;
     private Auktionsverwaltung auktionsverwaltung;
 
+    /**
+     * Privater Konstruktor zur Umsetzung des Singleton-Musters.
+     * Initialisiert die Userverwaltung und Auktionsverwaltung.
+     */
     private Auktionshaus() {
         userverwaltung = new Userverwaltung();
         auktionsverwaltung = new Auktionsverwaltung();
     }
 
+    /**
+     * Gibt die einzige Instanz des Auktionshauses zurück. 
+     * Wird bei Bedarf erstellt (Lazy Initialization).
+     *
+     * @return die Instanz des Auktionshauses
+     */
     public static Auktionshaus getInstance() {
         if (instance == null) {
             instance = new Auktionshaus();
@@ -20,39 +32,57 @@ public class Auktionshaus {
         return instance;
     }
 
-    // Getter für die Userverwaltung
+    /**
+     * Gibt die Userverwaltung zurück.
+     *
+     * @return das Userverwaltung-Objekt
+     */
     public Userverwaltung getUserverwaltung() {
         return userverwaltung;
     }
 
-    // Getter für die Auktionsverwaltung
+    /**
+     * Gibt die Auktionsverwaltung zurück.
+     *
+     * @return das Auktionsverwaltung-Objekt
+     */
     public Auktionsverwaltung getAuktionsverwaltung() {
         return auktionsverwaltung;
     }
 
+    /**
+     * Startet die Auktionssimulation.
+     * Es wird ein Artikel erstellt, eine Auktion initiiert und gestartet.
+     * Nach Ablauf der Zeit wird ein Bericht erzeugt.
+     */
     public void startSimulation() {
-       
         // Artikel erstellen
         Item item = new Item("Antike Vase", 100.0, 50.0);
-        int zufall = (int)(2*Math.random());
-        // Auktion starten
+        int zufall = (int)(2 * Math.random());
+
+        // Auktionator auswählen und Bieter abrufen
         User auktionator = userverwaltung.getAuktionator(zufall);
         List<User> bieter = userverwaltung.getBieterList();
 
+        // Auktion erstellen und starten
         Auktion auktion = auktionsverwaltung.erstelleAuktion(item, auktionator, bieter);
         auktionsverwaltung.starteAuktion(auktion);
 
-        // Warte auf das Ende der Auktion
+        // Wartezeit simulieren
         try {
-            Thread.sleep(5000); // Warte 5 Sekunden, um die Auktion zu beenden
+            Thread.sleep(5000); // 5 Sekunden warten
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Bericht erstellen
+        // Bericht zur Auktion ausgeben
         erstelleBericht();
     }
 
+    /**
+     * Erstellt und gibt einen Bericht über alle durchgeführten Auktionen aus.
+     * Enthält Informationen über die Anzahl der Auktionen, Bieter, Verkäufe und Provisionssummen.
+     */
     public void erstelleBericht() {
         List<Auktion> auktionen = auktionsverwaltung.getAuktionen();
         int anzahlAuktionen = auktionen.size();
