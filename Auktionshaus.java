@@ -50,34 +50,6 @@ public class Auktionshaus {
         return auktionsverwaltung;
     }
 
-    /**
-     * Startet die Auktionssimulation.
-     * Es wird ein Artikel erstellt, eine Auktion initiiert und gestartet.
-     * Nach Ablauf der Zeit wird ein Bericht erzeugt.
-     */
-    public void startSimulation() {
-        // Artikel erstellen
-        Item item = new Item("Antike Vase", 100.0, 50.0);
-        int zufall = (int)(2 * Math.random());
-
-        // Auktionator auswählen und Bieter abrufen
-        User auktionator = userverwaltung.getAuktionator(zufall);
-        List<User> bieter = userverwaltung.getBieterList();
-
-        // Auktion erstellen und starten
-        Auktion auktion = auktionsverwaltung.erstelleAuktion(item, auktionator, bieter);
-        auktionsverwaltung.starteAuktion(auktion);
-
-        // Wartezeit simulieren
-        try {
-            Thread.sleep(5000); // 5 Sekunden warten
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Bericht zur Auktion ausgeben
-        erstelleBericht();
-    }
 
     /**
      * Erstellt und gibt einen Bericht über alle durchgeführten Auktionen aus.

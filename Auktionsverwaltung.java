@@ -30,9 +30,28 @@ public class Auktionsverwaltung {
      *
      * @param auktion Die zu startende Auktion
      */
-    public void starteAuktion(Auktion auktion) {
-        new Thread(auktion).start();
+  public void starteAuktionen() {
+        List<Thread> threadListe = new ArrayList<>();
+
+        // Starte alle Auktionen und speichere ihre Threads
+        for (Auktion auktion : auktionen) {
+            Thread t = new Thread(auktion);
+            t.start();
+            threadListe.add(t);
+        }
+
+        // Warte auf das Ende aller Auktionen
+        for (Thread t : threadListe) {
+            try {
+                t.join(); // Blockiert das Hauptprogramm nur nach dem Start aller Auktionen
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        
     }
+
 
     /**
      * Gibt eine Liste aller bisher erstellten Auktionen zurück.

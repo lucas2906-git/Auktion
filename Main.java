@@ -7,14 +7,7 @@ import java.io.*;
  */
 public class Main {
 
-    /**
-     * Generiert eine Zufallszahl zwischen 1 und 5 (inklusive).
-     *
-     * @return Eine zufällige Ganzzahl zwischen 1 und 5
-     */
-    public static int zufallszahl() {
-        return (int)((Math.random()) * 5 + 1);
-    }
+  
 
     /**
      * Hilfsklasse zum gleichzeitigen Schreiben in mehrere OutputStreams.
@@ -93,16 +86,17 @@ public class Main {
         userverwaltung.addUser(new User("Fabian Groß", 0.04, 780.21));
         userverwaltung.addUser(new User("Hansi Flick", 0.24, 9000.2));
         userverwaltung.addUser(new User("Jogi Löw", 0.14, 221.2));
-        userverwaltung.addUser(new User("Julian Nagelsmann", 0.14, 20.20));
-        userverwaltung.addUser(new User("Emre Abi", 0.08, 201.5));
+        userverwaltung.addUser(new User("Julian Nagelsmann", 0.14, 2000.20));
+        userverwaltung.addUser(new User("Emre Abi", 0.08, 401.5));
 
-        // Zuweisung disjunkter Rollen (3 Auktionatoren, 2 Bieter)
-        userverwaltung.assignRandomRolesDisjoint(3, 2);
+        // Zuweisung der Rollen (3 Bieter, 2 Auktionatoren)
+        // (wer Bieter ist kann nicht Auktionator sein und umgekehrt)
+        userverwaltung.assignRandomRolesDisjoint(5, 2);
 
         // Artikel erstellen
-        Item item1 = new Item("Antike Vase", 100.0, 50.0);
-        Item item2 = new Item("Döner", 300.0, 50.0);
-        Item item3 = new Item("Zigaretten", 500.0, 50.0); // Hinweis: item3 wird nicht verwendet
+        Item item1 = new Item("Antike Vase", 400.0, 200.0);
+        Item item2 = new Item("Döner", 15.0, 5.0);
+        
 
         // Auktionatoren und Bieter vorbereiten
         User auktionator1 = userverwaltung.getAuktionator(0);
@@ -115,17 +109,11 @@ public class Main {
         }
 
         // Auktionen erstellen und starten
-        Auktion auktion1 = auktionshaus.getAuktionsverwaltung().erstelleAuktion(item1, auktionator1, bieter);
-        Auktion auktion2 = auktionshaus.getAuktionsverwaltung().erstelleAuktion(item2, auktionator2, bieter);
-        auktionshaus.getAuktionsverwaltung().starteAuktion(auktion1);
-        auktionshaus.getAuktionsverwaltung().starteAuktion(auktion2);
+        
+        auktionshaus.getAuktionsverwaltung().erstelleAuktion(item1, auktionator1, bieter);
+        auktionshaus.getAuktionsverwaltung().erstelleAuktion(item2, auktionator2, bieter);
+        auktionshaus.getAuktionsverwaltung().starteAuktionen();
 
-        // Warten, bis Auktionen durchlaufen
-        try {
-            Thread.sleep(9000); // Warten zur Simulation
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         // Abschlussbericht ausgeben
         auktionshaus.erstelleBericht();

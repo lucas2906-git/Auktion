@@ -46,17 +46,25 @@ public class Auktion implements Runnable {
     /**
      * Ein Bieter versucht ein Gebot basierend auf einer Wahrscheinlichkeit abzugeben.
      *
-     * @param bieter Der bietende Nutzer
+     * @param bieter Der möglicherweise bietende Nutzer
      * @param gebotswahrscheinlichkeit Die Wahrscheinlichkeit, mit der geboten wird
      * @return true, wenn erfolgreich geboten wurde (Artikel verkauft), sonst false
      */
     public synchronized boolean biete(User bieter, double gebotswahrscheinlichkeit) {
+    	
         if (istAktiv && Math.random() < gebotswahrscheinlichkeit) {
-            istAktiv = false;
-            artikelVerkauft = true;
-            provision = aktuellerPreis * 0.18; // 18% Provision
-            return true;
+        	 if (istAktiv && Math.random() < gebotswahrscheinlichkeit) {
+        	        if (bieter.getBudget() >= aktuellerPreis) { // Prüfen, ob genug Budget vorhanden ist
+        	            istAktiv = false;
+        	            artikelVerkauft = true;
+        	            bieter.reduceBudget(aktuellerPreis); // Budget des Bieters nach Kauf reduzieren
+        	            provision = aktuellerPreis * 0.18; // 18% Provision
+        	            return true;
+        	       
+        	        }
+        	 }
         }
+    	
         return false;
     }
 
@@ -77,7 +85,7 @@ public class Auktion implements Runnable {
                 }
             }
             try {
-                Thread.sleep(1000); // Warte 1 Sekunde
+                Thread.sleep(100); // Warte 0,1 Sekunden
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -92,5 +100,12 @@ public class Auktion implements Runnable {
      */
     public double getProvision() {
         return provision;
+    }
+    public boolean istArtikelVerkauft() {
+        return artikelVerkauft;
+    }
+
+    public List<User> getBieter() {
+        return bieter;
     }
 }

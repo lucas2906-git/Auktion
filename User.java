@@ -88,6 +88,15 @@ public class User {
     public double getBudget() {
         return budget;
     }
+    /**
+     * Reduziert das aktuelle Budget des Benutzers nach Kauf.
+     *
+     * 
+     */
+    public void reduceBudget(double betrag) {
+    	budget-=betrag;
+    	
+    }
 
 }
 
