@@ -1,4 +1,9 @@
+package Auktion;
 import java.util.List;
+
+import Nutzer.User;
+import Nutzer.Userverwaltung;
+
 import java.io.*;
 
 /**

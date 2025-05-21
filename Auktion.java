@@ -1,4 +1,7 @@
+package Auktion;
 import java.util.List;
+
+import Nutzer.User;
 
 /**
  * Repräsentiert eine Auktion für einen Artikel, der von einem Auktionator angeboten wird

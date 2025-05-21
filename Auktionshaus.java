@@ -1,4 +1,7 @@
+package Auktion;
 import java.util.List;
+
+import Nutzer.Userverwaltung;
 
 /**
  * Repräsentiert das Auktionshaus, das als Singleton implementiert ist.

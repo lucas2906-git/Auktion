@@ -1,5 +1,9 @@
+package Auktion;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import Nutzer.User;
 
 /**
  * Verwaltet alle laufenden und erstellten Auktionen innerhalb des Auktionshauses.

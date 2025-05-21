@@ -1,3 +1,4 @@
+package Nutzer;
 /**
  * Repräsentiert einen Benutzer der Plattform, der entweder als Bieter oder Auktionator aktiv sein kann.
  * Jeder Benutzer besitzt einen Benutzernamen, eine Wahrscheinlichkeit zur Teilnahme an Geboten sowie ein Budget.

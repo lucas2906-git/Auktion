@@ -1,3 +1,4 @@
+package Auktion;
 /**
  * Repräsentiert einen Artikel, der in einer Auktion verkauft wird.
  * Ein Artikel besitzt einen Namen, einen Startpreis sowie einen Mindestpreis.
