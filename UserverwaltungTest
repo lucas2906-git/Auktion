@@ -1,0 +1,32 @@
+package Nutzer;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+class UserverwaltungTest {
+
+    @Test
+    void testAddUserAndAssignRoles() {
+        Userverwaltung verwaltung = new Userverwaltung();
+        User a = new User("A", 0.1, 100);
+        User b = new User("B", 0.2, 200);
+        verwaltung.addUser(a);
+        verwaltung.addUser(b);
+        verwaltung.assignRandomRolesDisjoint(1, 1);
+        assertEquals(1, verwaltung.getBieterList().size());
+        assertEquals(1, verwaltung.getAuktionatorList().size());
+        // Kein User soll beide Rollen haben
+        assertFalse(verwaltung.getBieterList().get(0).isAuktionator());
+        assertFalse(verwaltung.getAuktionatorList().get(0).isBieter());
+    }
+
+    @Test
+    void testGetAuktionatorByIndex() {
+        Userverwaltung verwaltung = new Userverwaltung();
+        verwaltung.addUser(new User("A", 0.1, 100));
+        verwaltung.addUser(new User("B", 0.2, 200));
+        verwaltung.assignRandomRolesDisjoint(1, 1);
+        assertTrue(verwaltung.getAuktionator(0).isAuktionator());
+    }
+}
