@@ -61,7 +61,7 @@ public class Auktion implements Runnable {
         	            istAktiv = false;
         	            artikelVerkauft = true;
         	            bieter.reduceBudget(aktuellerPreis); // Budget des Bieters nach Kauf reduzieren
-        	            provision = aktuellerPreis * 0.18; // 18% Provision
+        	            provision = aktuellerPreis * 0.01; // 1% Provision
         	            return true;
         	       
         	        }
