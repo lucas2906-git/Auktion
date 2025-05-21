@@ -1,0 +1,40 @@
+package Nutzer;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class UserTest {
+
+    @Test
+    void testConstructorAndGetters() {
+        User user = new User("TestUser", 0.5, 100.0);
+        assertEquals("TestUser", user.getUsername());
+        assertEquals(0.5, user.getWahrscheinlichkeit(), 0.0001);
+        assertEquals(100.0, user.getBudget(), 0.0001);
+    }
+
+    @Test
+    void testSetAndIsBieter() {
+        User user = new User("TestUser", 0.5, 100.0);
+        user.setBieter(true);
+        assertTrue(user.isBieter());
+        user.setBieter(false);
+        assertFalse(user.isBieter());
+    }
+
+    @Test
+    void testSetAndIsAuktionator() {
+        User user = new User("TestUser", 0.5, 100.0);
+        user.setAuktionator(true);
+        assertTrue(user.isAuktionator());
+        user.setAuktionator(false);
+        assertFalse(user.isAuktionator());
+    }
+
+    @Test
+    void testReduceBudget() {
+        User user = new User("TestUser", 0.5, 100.0);
+        user.reduceBudget(40.0);
+        assertEquals(60.0, user.getBudget(), 0.0001);
+    }
+}
