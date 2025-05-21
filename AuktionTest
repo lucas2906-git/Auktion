@@ -1,0 +1,49 @@
+package Auktion;
+
+import Nutzer.User;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+import java.util.Collections;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AuktionTest {
+
+    @Test
+    void testPreisVerringern() {
+        Item item = new Item("Buch", 20.0, 15.0);
+        User auktionator = new User("Seller", 0.5, 100.0);
+        List<User> bieter = Collections.emptyList();
+        Auktion auktion = new Auktion(item, auktionator, bieter);
+
+        auktion.preisVerringern();
+        assertEquals(19.0, auktion.aktuellerPreis, 0.0001);
+    }
+
+    @Test
+    void testBieteErfolgreich() {
+        Item item = new Item("Buch", 20.0, 15.0);
+        User auktionator = new User("Seller", 0.5, 100.0);
+        User bieter = new User("Buyer", 1.0, 25.0);
+        Auktion auktion = new Auktion(item, auktionator, List.of(bieter));
+
+        boolean result = auktion.biete(bieter, 1.0);
+        assertTrue(result);
+        assertFalse(auktion.istAktiv);
+        assertTrue(auktion.artikelVerkauft);
+        assertEquals(5.0, bieter.getBudget(), 0.0001);
+        assertEquals(3.6, auktion.provision, 0.0001);
+    }
+
+    @Test
+    void testBieteNichtErfolgreich() {
+        Item item = new Item("Buch", 20.0, 15.0);
+        User auktionator = new User("Seller", 0.5, 100.0);
+        User bieter = new User("Buyer", 0.0, 25.0);
+        Auktion auktion = new Auktion(item, auktionator, List.of(bieter));
+
+        boolean result = auktion.biete(bieter, 0.0);
+        assertFalse(result);
+        assertTrue(auktion.istAktiv);
+        assertFalse(auktion.artikelVerkauft);
+    }
+}
