@@ -1,0 +1,21 @@
+package Auktion;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ItemTest {
+
+    @Test
+    void testConstructorAndGetters() {
+        Item item = new Item("Laptop", 200.0, 100.0);
+        assertEquals("Laptop", item.getName());
+        assertEquals(200.0, item.getStartPreis(), 0.0001);
+        assertEquals(100.0, item.getMindestPreis(), 0.0001);
+    }
+
+    @Test
+    void testToString() {
+        Item item = new Item("Tablet", 150.0, 50.0);
+        assertEquals("Tablet", item.toString());
+    }
+}
