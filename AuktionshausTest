@@ -1,0 +1,21 @@
+package Auktion;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AuktionshausTest {
+
+    @Test
+    void testSingleton() {
+        Auktionshaus a1 = Auktionshaus.getInstance();
+        Auktionshaus a2 = Auktionshaus.getInstance();
+        assertSame(a1, a2);
+    }
+
+    @Test
+    void testGetUserverwaltungUndAuktionsverwaltung() {
+        Auktionshaus haus = Auktionshaus.getInstance();
+        assertNotNull(haus.getUserverwaltung());
+        assertNotNull(haus.getAuktionsverwaltung());
+    }
+}
