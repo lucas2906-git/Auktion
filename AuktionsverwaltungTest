@@ -1,0 +1,22 @@
+package Auktion;
+
+import Nutzer.User;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AuktionsverwaltungTest {
+
+    @Test
+    void testErstelleAuktionUndGetAuktionen() {
+        Auktionsverwaltung verwaltung = new Auktionsverwaltung();
+        Item item = new Item("Stuhl", 50.0, 10.0);
+        User auktionator = new User("Seller", 0.5, 100.0);
+        List<User> bieter = List.of(new User("Bieter1", 1.0, 60.0));
+        Auktion auktion = verwaltung.erstelleAuktion(item, auktionator, bieter);
+
+        List<Auktion> auktionen = verwaltung.getAuktionen();
+        assertEquals(1, auktionen.size());
+        assertSame(auktion, auktionen.get(0));
+    }
+}
